@@ -16,7 +16,7 @@ console.log(shops)
 
   const renderProductList = (menu) => {
     return menu.map(({id, ...props}) => {
-      return <ProductItem key={id} {...props}/>
+      return <ProductItem key={id} id={id} {...props}/>
     })
   }
 
