@@ -5,8 +5,6 @@ import {decCount, incCount, removeItem} from '../cartList/cartSlice'
 const CartItem = ({title, url, price, count, id}) => {
   const dispatch = useDispatch();
 
-  console.log(id);
-
   const onIncriment = () => {
     dispatch(incCount(id));
   }

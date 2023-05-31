@@ -5,7 +5,6 @@ import './cartList.scss'
 
 const CartList = () => {
   const {items} = useSelector(state => state.cart)
-  console.log(items)
 
   const elements = items.length>0 ? items.map(({id, ...props}) => {
     return <CartItem key={id} id={id} {...props}/>

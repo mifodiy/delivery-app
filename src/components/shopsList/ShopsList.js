@@ -10,15 +10,16 @@ import './shopsList.scss'
 const ShopList = () => {
   const dispatch = useDispatch();
   const {shops} = useSelector(state => state.shops)
-
+  const {processShop} = useSelector(state => state.cart)
 
   useEffect(() => {
-    console.log('useEffect')
     dispatch(fetchShops())
   },[])
 
   const onChangeShop = (id) => {
-    dispatch(changeActiveShop(id));
+    if (!processShop){
+      dispatch(changeActiveShop(id));
+    }
   }
 
   const elements = shops.map(item => {

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../cartList/cartSlice'
 import './productItem.scss'
 
-const ProductItem = ({title, url, id, price}) => {
+const ProductItem = ({title, url, id, price, shop}) => {
   const dispatch = useDispatch();
 
   const onAddItem = () => {
-    dispatch(addItem({id, title, url, price}))
+    dispatch(addItem({id, title, url, price, shop}))
   }
 
   return (

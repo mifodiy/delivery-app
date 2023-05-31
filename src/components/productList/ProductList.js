@@ -9,7 +9,6 @@ const ProductList = () => {
   const {activeShop, shops, shopsLoadingStatus} = useSelector(state => state.shops, shallowEqual);
   const menu = shops.length > 1 ? shops.filter(item => item.id === activeShop)[0].menu : []
   
-console.log(shops)
   useEffect(() => {
     renderProductList(menu)
   },[activeShop])

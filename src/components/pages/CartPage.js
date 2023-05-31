@@ -1,14 +1,14 @@
+import CartForm from "../cartForm/CartForm"
 import CartList from "../cartList/CartList"
-import Counter from "../counter/Counter"
+
 
 const CartPage = () => {
   return (
-    <>
-    <CartList/>
+    <div className="cart__wrapper" style={{display: 'flex'}}>
+      <CartList />
+      <CartForm />
+    </div>
 
-<Counter amount={0}/>
-    </>
-    
   )
 }
 
