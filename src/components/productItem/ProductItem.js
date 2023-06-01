@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { addItem } from '../cartList/cartSlice'
 import './productItem.scss'

@@ -1,16 +1,23 @@
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
+import { useJsApiLoader, Autocomplete } from '@react-google-maps/api'
 
-import  {useHttp} from '../../hooks/http.hook'
+import { useHttp } from '../../hooks/http.hook'
 import { clearCart } from "../cartList/cartSlice";
 
 import './cartForm.scss'
+import Map from "../map/Map";
+
 
 const CartForm = () => {
-  const {totalPrice, items} = useSelector(state => state.cart);
-  const {request} = useHttp();
+  const addressRef = useRef();
+  const [directionResponse, setDirectionResponse] = useState(null);
+  const { totalPrice, items } = useSelector(state => state.cart);
+  const { activeAddress } = useSelector(state => state.shops);
+  const { request } = useHttp();
   const dispatch = useDispatch();
   const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
   const schema = yup.object({
@@ -20,22 +27,51 @@ const CartForm = () => {
     address: yup.string().required('Address is a required field')
   }).required();
 
-  const { register, handleSubmit, formState: { errors } , reset} = useForm({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema)
   });
-  const onSubmit = data =>{
-    const result = {...data, items};
+
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyDxg6WbNrQbgIeNo542YkjVg_ltBY8DT8w",
+    libraries: ['places']
+  })
+
+  if (!isLoaded) {
+    return <h5>Map is not loading</h5>
+  }
+
+  const calculateRout = async () => {
+    if (addressRef.current.value === '') {
+      return
+    }
+
+    // eslint-disable-next-line no-undef
+    const directionService = new google.maps.DirectionsService();
+    const result = await directionService.route({
+      origin: activeAddress,
+      destination: addressRef.current.value,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.DRIVING
+    });
+    setDirectionResponse(result);
+  }
+
+
+  const onSubmit = data => {
+    const result = { ...data, items };
 
     request("http://localhost:3001/orders", 'POST', JSON.stringify(result))
-    .then(reset())
-    .then(dispatch(clearCart()))
-    .catch('Bad')
-    
-  } 
+      .then(reset())
+      .then(dispatch(clearCart()))
+      .catch('Bad')
+
+  }
+
 
 
   return (
     <form className="cart-form" onSubmit={handleSubmit(onSubmit)}>
+      <Map directionResponse={directionResponse} />
 
       <label className="cart-form__label">
         Name:
@@ -55,7 +91,9 @@ const CartForm = () => {
       <p className="cart-form__error">{errors.phoneNumber?.message}</p>
       <label className="cart-form__label">
         Address:
-        <input className="cart-form__input" {...register("address")} />
+        <Autocomplete onPlaceChanged={calculateRout}>
+          <input className="cart-form__input" {...register("address")} type="text" ref={addressRef} />
+        </Autocomplete>
       </label>
       <p className="cart-form__error">{errors.address?.message}</p>
 

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Counter from "../counter/Counter";
 import {decCount, incCount, removeItem} from '../cartList/cartSlice'
 

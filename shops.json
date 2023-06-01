@@ -3,6 +3,10 @@
     {
       "id": 1,
       "name": "McDonalds",
+      "location": {
+        "coordinates": {"lat": 50.44739407662729, "lng": 30.52292691972628},
+        "address": "вулиця Хрещатик, 19-a, Київ, 01001"
+      },
       "menu": [
         {
           "id": 1,
@@ -51,6 +55,10 @@
     {
       "id": 2,
       "name": "KFC",
+      "location": {
+        "coordinates": {"lat": 50.44865114368563, "lng": 30.523409717330665},
+        "address": "вулиця Хрещатик, 13, Київ, 02000"
+      },
       "menu": [
         {
           "id": 1,
@@ -99,6 +107,10 @@
     {
       "id": 3,
       "name": "Burger King",
+      "location": {
+        "coordinates": {"lat": 50.45083043627304, "lng": 30.526027553300334},
+        "address": "вулиця Хрещатик, 7/11, Київ, 02000"
+      },
       "menu": [
         {
           "id": 1,
@@ -269,6 +281,31 @@
         }
       ],
       "id": 5
+    },
+    {
+      "firstName": "Владимир Кваша",
+      "email": "mifodiy911@gmail.com",
+      "phoneNumber": "+380930714498",
+      "address": "Парковая 22",
+      "items": [
+        {
+          "id": 1,
+          "title": "Big Burger",
+          "url": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg",
+          "price": 10,
+          "shop": "McDonalds",
+          "count": 1
+        },
+        {
+          "id": 2,
+          "title": "Litle Burger",
+          "url": "https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/102cf51c-9220-4278-8b63-2b9611ad275e/Derivates/3831dbe2-352e-4409-a2e2-fc87d11cab0a.jpg",
+          "price": 5,
+          "shop": "McDonalds",
+          "count": 1
+        }
+      ],
+      "id": 6
     }
   ]
 }

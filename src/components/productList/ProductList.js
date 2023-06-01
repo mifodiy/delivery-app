@@ -1,25 +1,33 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector, shallowEqual } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import ProductItem from "../productItem/ProductItem"
+import Spinner from "../spinner/Spinner"
 
 import './productList.scss'
 
 const ProductList = () => {
-  const {activeShop, shops, shopsLoadingStatus} = useSelector(state => state.shops, shallowEqual);
+  const { activeShop, shops, shopsLoadingStatus } = useSelector(state => state.shops);
   const menu = shops.length > 1 ? shops.filter(item => item.id === activeShop)[0].menu : []
-  
+
   useEffect(() => {
     renderProductList(menu)
-  },[activeShop])
+    // eslint-disable-next-line
+  }, [activeShop])
+
+  if (shopsLoadingStatus === "loading") {
+    return <Spinner />;
+  } else if (shopsLoadingStatus === "error") {
+    return <h5 className="error">Ошибка загрузки</h5>
+  }
 
   const renderProductList = (menu) => {
-    return menu.map(({id, ...props}) => {
-      return <ProductItem key={id} id={id} {...props}/>
+    return menu.map(({ id, ...props }) => {
+      return <ProductItem key={id} id={id} {...props} />
     })
   }
 
-  const elements = shopsLoadingStatus==='loading'? <h5>Loading...</h5> : renderProductList(menu)
+  const elements = renderProductList(menu)
   return (
     <ul className="product-list">
       {elements}

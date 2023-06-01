@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Header from '../header/Header';
 import './App.scss';
-import ShopPage from "../pages/ShopPage";
-import CartPage from "../pages/CartPage";
+const ShopPage = lazy(() => import("../pages/ShopPage"));
+const CartPage =lazy(() => import("../pages/CartPage"));
+
 
 function App() {
-  console.log('render APP')
   return (
     <Router>
       <div className="app">
