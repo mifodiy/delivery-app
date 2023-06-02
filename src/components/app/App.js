@@ -9,7 +9,7 @@ const CartPage =lazy(() => import("../pages/CartPage"));
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="app">
       <Header />
       <Suspense>
