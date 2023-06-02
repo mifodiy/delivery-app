@@ -10,6 +10,7 @@ import { clearCart } from "../cartList/cartSlice";
 import './cartForm.scss'
 import Map from "../map/Map";
 
+const libraries = ['places']
 
 const CartForm = () => {
   const addressRef = useRef('');
@@ -31,7 +32,7 @@ const CartForm = () => {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDxg6WbNrQbgIeNo542YkjVg_ltBY8DT8w",
-    libraries: ['places']
+    libraries
   })
 
   if (!isLoaded) {

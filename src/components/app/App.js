@@ -15,8 +15,6 @@ function App() {
       <Suspense>
         <Routes>
           <Route path="/" element={<ShopPage/>}/>
-        </Routes>
-        <Routes>
           <Route path="/cart" element={<CartPage/>}/>
         </Routes>
       </Suspense>
