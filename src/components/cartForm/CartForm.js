@@ -7,13 +7,12 @@ import { useJsApiLoader, Autocomplete } from '@react-google-maps/api'
 
 import { useHttp } from '../../hooks/http.hook'
 import { clearCart } from "../cartList/cartSlice";
-
 import './cartForm.scss'
 import Map from "../map/Map";
 
 
 const CartForm = () => {
-  const addressRef = useRef();
+  const addressRef = useRef('');
   const [directionResponse, setDirectionResponse] = useState(null);
   const { totalPrice, items } = useSelector(state => state.cart);
   const { activeAddress } = useSelector(state => state.shops);
@@ -24,7 +23,6 @@ const CartForm = () => {
     firstName: yup.string().required('Name is a required field'),
     email: yup.string().email().required('Email is a required field'),
     phoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('phone is a required field'),
-    address: yup.string().required('Address is a required field')
   }).required();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -43,7 +41,7 @@ const CartForm = () => {
   const calculateRout = async () => {
     if (addressRef.current.value === '') {
       return
-    }
+    }    
 
     // eslint-disable-next-line no-undef
     const directionService = new google.maps.DirectionsService();
@@ -56,19 +54,17 @@ const CartForm = () => {
     setDirectionResponse(result);
   }
 
-
   const onSubmit = data => {
-    const result = { ...data, items };
+ 
+    const result = { ...data, address: addressRef.current.value, items };
 
-    request("http://localhost:3001/orders", 'POST', JSON.stringify(result))
+    request("https://647478397de100807b1b010c.mockapi.io/orders", 'POST', JSON.stringify(result))
       .then(reset())
       .then(dispatch(clearCart()))
-      .catch('Bad')
+      .catch('Something went wrong')
 
   }
-
-
-
+ 
   return (
     <form className="cart-form" onSubmit={handleSubmit(onSubmit)}>
       <Map directionResponse={directionResponse} />
@@ -91,8 +87,8 @@ const CartForm = () => {
       <p className="cart-form__error">{errors.phoneNumber?.message}</p>
       <label className="cart-form__label">
         Address:
-        <Autocomplete onPlaceChanged={calculateRout}>
-          <input className="cart-form__input" {...register("address")} type="text" ref={addressRef} />
+        <Autocomplete onPlaceChanged={calculateRout} >
+          <input className="cart-form__input" {...register("address")}  type="text" ref={addressRef} />
         </Autocomplete>
       </label>
       <p className="cart-form__error">{errors.address?.message}</p>

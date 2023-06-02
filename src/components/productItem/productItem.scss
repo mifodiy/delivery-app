@@ -1,5 +1,8 @@
+@import '../../styles/var.scss';
+
 .product-item {
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
   border: 1px solid #000;
   border-radius: 10px;
   
@@ -14,10 +17,19 @@
   &__box {
     text-align: right;
     padding: 15px;
+
+    @include r(576) {
+      text-align: center;
+    }
   }
 
   &__title {
     text-align: left;
+    margin-bottom: 15px;
+
+    @include r(576) {
+      text-align: center;
+    }
   }
  
 
