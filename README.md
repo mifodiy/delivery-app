@@ -15,7 +15,7 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-#### I use mockapi for backend. You can watch orders:
+#### I use mockapi. You can watch orders:
 https://647478397de100807b1b010c.mockapi.io/orders
 
 
