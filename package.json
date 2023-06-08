@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "dotenv": "^16.1.4",
     "gh-pages": "^5.0.0"
   }
 }

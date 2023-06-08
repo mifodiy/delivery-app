@@ -7,7 +7,7 @@ import { useJsApiLoader, Autocomplete } from '@react-google-maps/api'
 
 import { useHttp } from '../../hooks/http.hook'
 import { clearCart } from "../cartList/cartSlice";
-import './cartForm.scss'
+import './cartForm.scss';
 import Map from "../map/Map";
 
 const libraries = ['places']
@@ -24,16 +24,18 @@ const CartForm = () => {
     firstName: yup.string().required('Name is a required field'),
     email: yup.string().email().required('Email is a required field'),
     phoneNumber: yup.string().matches(phoneRegExp, 'Phone number is not valid').required('phone is a required field'),
+    address: yup.string().required('Address is a required field')
   }).required();
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
     resolver: yupResolver(schema)
   });
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyDxg6WbNrQbgIeNo542YkjVg_ltBY8DT8w",
+    googleMapsApiKey:process.env.REACT_APP_GOOGLE_MAPS_API,
     libraries
   })
+
 
   if (!isLoaded) {
     return <h5>Map is not loading</h5>
@@ -43,6 +45,8 @@ const CartForm = () => {
     if (addressRef.current.value === '') {
       return
     }    
+
+    setValue("address", addressRef.current.value, {shouldValidate: true});
 
     // eslint-disable-next-line no-undef
     const directionService = new google.maps.DirectionsService();
